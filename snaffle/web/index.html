@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script>
+var f = function() {
+  var canvas = document.getElementById('canvas');
+  var ctx = canvas.getContext('2d');
+  var status = document.getElementById('status');
+
+  var connect = function() {
+    console.log("connecting...");
+    status.innerHTML = "connecting...";
+    var socket = new WebSocket('ws://localhost:9999/ws', ['soap', 'xmpp']);
+    socket.onopen = function() {
+      console.log("connected");
+      status.innerHTML = "connected";
+    };
+    socket.onerror = function() {
+      console.log("error");
+      console.log("error");
+      connect();
+    };
+    socket.onmessage = function(e) {
+      cmd = JSON.parse(e.data);
+      if(cmd.type == 'script') {
+        eval(cmd.content);
+      }
+    };
+  };
+  connect();
+
+}
+
+window.onload = f
+</script>
+</head>
+
+<body>
+<div>
+  <span id="status">Hello</span>
+</div>
+<div style="border: solid 1px">
+  <canvas id="canvas" width="800px" height="600px"></canvas>
+</div>
+</body>
+</html>
