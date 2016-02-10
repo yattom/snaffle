@@ -13,7 +13,11 @@ logger.addHandler(handler)
 import snaffle.ws_server
 
 class Snaffle:
-    def __init__(self):
+    def __init__(self, start=True):
+        if start:
+            self.start()
+
+    def start(self):
         snaffle.ws_server.start_server_tornado()
         webbrowser.open('http://localhost:9999/index')
 

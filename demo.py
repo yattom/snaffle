@@ -4,7 +4,7 @@ import time
 import math
 import random
 
-from snaffle import snaffle, snaffle_threading
+from snaffle import snaffle
 
 
 def main():

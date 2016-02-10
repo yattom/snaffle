@@ -78,7 +78,13 @@ def run(msg_queue):
     ioloop = tornado.ioloop.IOLoop.instance()
     ioloop.make_current()
     ioloop.spawn_callback(process_outbound_messages, msg_queue)
-    ioloop.start()
+
+    while True:
+        try:
+            ioloop.start()
+        except KeyboardInterrupt:
+            # This process should not be interrupted
+            pass
 
 process = None
 
